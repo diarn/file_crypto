@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:file_encryptor/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,12 +47,28 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Text(
-                    "Recent Files",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Recent Files",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.DESCRYPT);
+                        },
+                        child: Text(
+                          "see all encrypted file",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(

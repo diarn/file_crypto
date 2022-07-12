@@ -11,7 +11,7 @@ class DescryptView extends GetView<DescryptController> {
     controller.getFiles();
     return Scaffold(
         appBar: AppBar(
-          title: Text('DescryptView'),
+          title: Text('All Encrypted Files'),
           centerTitle: true,
         ),
         body: Obx(() {
@@ -22,45 +22,49 @@ class DescryptView extends GetView<DescryptController> {
             crossAxisCount: 2,
             children: [
               for (var i = 0; i < controller.fileName.length; i++)
-                Container(
-                    // padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
+                Material(
+                  borderRadius: BorderRadius.circular(8),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: () {
+                      controller.openDescryptDialog(size,
+                          controller.file[i].path, controller.fileName[i]);
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    topRight: Radius.circular(8),
+                                  ),
+                                  color: Colors.teal),
+                              child: SizedBox(
+                                width: size.width * 0.5,
+                                height: size.width * 0.33,
+                                child: Image.network(
+                                    "https://static.thenounproject.com/png/1631724-200.png"),
                               ),
-                              color: Colors.red),
-                          child: SizedBox(
-                            width: size.width * 0.5,
-                            height: size.width * 0.33,
-                            child: Image.network(
-                                "https://static.thenounproject.com/png/1631724-200.png"),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text("${controller.fileName[i]}"),
-                        ),
-                      ],
-                    )),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text("${controller.fileName[i]}"),
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
             ],
           );
-          // return ListView(
-          //   children: [
-          //     for (var i = 0; i < controller.file.length; i++) Text("data $i"),
-          //   ],
-          // );
         }));
   }
 }
