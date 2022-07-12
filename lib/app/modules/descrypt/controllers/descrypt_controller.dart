@@ -46,82 +46,91 @@ class DescryptController extends GetxController {
 
   openDescryptDialog(Size size, String filePath, String fileName) async {
     inFileNameDescrypt.text = fileName;
-    Get.dialog(Dialog(
-      child: Container(
-        padding: EdgeInsets.all(16),
-        height: size.height * 0.35,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MyFormField(
-              inputController: inFileNameDescrypt,
-              label: "Original File Name",
-              textInputType: TextInputType.text,
-              hintText: "hintText",
-              readOnly: true,
-            ),
-            MyFormField(
-              inputController: key,
-              label: "Your Security Key",
-              textInputType: TextInputType.text,
-              hintText: "Input the key for this file",
-              readOnly: false,
-            ),
-            MyFormField(
-              inputController: outFileNameDescrypt,
-              label: "Output Name",
-              textInputType: TextInputType.text,
-              hintText: "Feel free to take anything you want",
-              readOnly: false,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Material(
-                  color: Colors.teal[300],
-                  borderRadius: BorderRadius.circular(8),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(8),
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text("Cancel"),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Material(
-                  color: Colors.teal,
-                  borderRadius: BorderRadius.circular(8),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(8),
-                    onTap: () {
-                      Get.back();
-                      isLoading.value = true;
-                      isLoading.refresh();
-                      descryptFile(filePath).then((_) {
-                        isLoading.value = false;
-                        isLoading.refresh();
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        "Descrypt",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+    Get.dialog(SimpleDialog(
+      title: Text("Descrypt File"),
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: MyFormField(
+            inputController: inFileNameDescrypt,
+            label: "Original File Name",
+            textInputType: TextInputType.text,
+            hintText: "hintText",
+            readOnly: true,
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: MyFormField(
+            inputController: key,
+            label: "Your Security Key",
+            textInputType: TextInputType.text,
+            hintText: "Input the key for this file",
+            readOnly: false,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: MyFormField(
+            inputController: outFileNameDescrypt,
+            label: "Output Name",
+            textInputType: TextInputType.text,
+            hintText: "Feel free to take anything you want",
+            readOnly: false,
+          ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Material(
+                color: Colors.teal[300],
+                borderRadius: BorderRadius.circular(8),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Cancel"),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Material(
+                color: Colors.teal,
+                borderRadius: BorderRadius.circular(8),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {
+                    Get.back();
+                    isLoading.value = true;
+                    isLoading.refresh();
+                    descryptFile(filePath).then((_) {
+                      isLoading.value = false;
+                      isLoading.refresh();
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      "Descrypt",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     ));
   }
 
