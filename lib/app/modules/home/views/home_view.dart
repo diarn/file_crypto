@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:file_encryptor/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,7 +62,8 @@ class HomeView extends GetView<HomeController> {
                     child: ListView(
                       children: [
                         for (var i = 0; i < controller.fileName.length; i++)
-                          _data(),
+                          _data(size, controller.fileName[i],
+                              controller.file[i].path),
                       ],
                     ),
                   ),
@@ -103,7 +106,7 @@ class HomeView extends GetView<HomeController> {
     });
   }
 
-  Widget _data() {
+  Widget _data(Size size, String fileName, String filePath) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
       child: Material(
@@ -111,7 +114,10 @@ class HomeView extends GetView<HomeController> {
         color: Colors.teal,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: () {},
+          onTap: () {
+            controller.openDescryptDialog(size, filePath, fileName);
+            inspect(filePath);
+          },
           child: Container(
             padding: EdgeInsets.all(8),
             child: Row(
@@ -120,7 +126,7 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(
                   width: 10,
                 ),
-                Text("data"),
+                Text(fileName),
               ],
             ),
           ),
