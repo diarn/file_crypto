@@ -19,6 +19,7 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+      transition: Transition.fade,
     ),
     GetPage(
       name: _Paths.SPLASH,
@@ -29,6 +30,7 @@ class AppPages {
       name: _Paths.DESCRYPT,
       page: () => DescryptView(),
       binding: DescryptBinding(),
+      transition: Transition.fade,
     ),
   ];
 }
