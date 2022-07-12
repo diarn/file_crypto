@@ -120,13 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.3"
-  file_encrypter:
-    dependency: "direct main"
-    description:
-      name: file_encrypter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   file_picker:
     dependency: "direct main"
     description:
