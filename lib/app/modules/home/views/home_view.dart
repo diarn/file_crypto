@@ -8,9 +8,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  AppBar appBar = AppBar();
+  final AppBar appBar = AppBar();
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     Size size = MediaQuery.of(context).size;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -21,7 +25,7 @@ class HomeView extends GetView<HomeController> {
           body: _content(context, size),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              controller.pickFile();
+              controller.pickFile(size);
             },
             label: Text("Encrypt New File"),
             icon: Icon(MdiIcons.lockPlus),

@@ -8,8 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../views/my_widget.dart';
+
 class HomeController extends GetxController {
   TextEditingController key = TextEditingController();
+  TextEditingController inFileNameEncrypt = TextEditingController();
   TextEditingController outFileNameEncrypt = TextEditingController();
   TextEditingController inFileNameDescrypt = TextEditingController();
   TextEditingController outFileNameDescrypt = TextEditingController();
@@ -29,30 +32,94 @@ class HomeController extends GetxController {
   @override
   void onClose() {}
 
-  pickFile() async {
+  pickFile(Size size) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc'],
     );
     if (result != null) {
       PlatformFile file = result.files.first;
-      Get.dialog(Dialog(
-        child: Column(
-          children: [
-            TextFormField(
-              controller: key,
+      inFileNameEncrypt.text = file.name;
+      Get.dialog(
+        Dialog(
+          child: Container(
+            padding: EdgeInsets.all(16),
+            height: size.height * 0.4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MyFormField(
+                  inputController: inFileNameEncrypt,
+                  label: "Original File Name",
+                  textInputType: TextInputType.text,
+                  hintText: "hintText",
+                  readOnly: true,
+                ),
+                MyFormField(
+                  inputController: key,
+                  label: "Your Security Key",
+                  textInputType: TextInputType.text,
+                  hintText:
+                      "Please remember this key for unlock the file later",
+                  readOnly: false,
+                ),
+                MyFormField(
+                  inputController: outFileNameEncrypt,
+                  label: "Output Name",
+                  textInputType: TextInputType.text,
+                  hintText: "Feel free to take anything you want",
+                  readOnly: false,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Material(
+                      color: Colors.teal[300],
+                      borderRadius: BorderRadius.circular(8),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text("Cancel"),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Material(
+                      color: Colors.teal,
+                      borderRadius: BorderRadius.circular(8),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "Encrypt",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            TextFormField(
-              controller: outFileNameEncrypt,
-            ),
-          ],
+          ),
         ),
-      )).then((value) {
-        encryptFile(file.path!).then((_) {
-          fileName.clear();
-          getFiles();
-        });
-      });
+      );
+      // .then((value) {
+      //   encryptFile(file.path!).then((_) {
+      //     fileName.clear();
+      //     getFiles();
+      //   });
+      // });
     } else {
       // User canceled the picker
     }
