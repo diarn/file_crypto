@@ -8,6 +8,7 @@ import '../controllers/splash_controller.dart';
 class SplashView extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -16,18 +17,29 @@ class SplashView extends GetView<SplashController> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
       ),
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text('SplashView'),
-        //   centerTitle: true,
-        // ),
-        body: Center(
-          child: Text(
-            'SplashView is working',
-            style: TextStyle(fontSize: 20),
-          ),
+        body: Stack(
+          children: [
+            Container(
+              height: size.height,
+              width: size.width,
+              decoration: BoxDecoration(
+                color: Colors.teal[800],
+              ),
+            ),
+            Center(
+              child: Text(
+                'Selamat Datang di Aplikasi \n Rita Bonita',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
