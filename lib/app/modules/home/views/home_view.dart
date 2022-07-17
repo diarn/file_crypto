@@ -29,7 +29,7 @@ class HomeView extends GetView<HomeController> {
             onPressed: () {
               controller.pickFile(size);
             },
-            label: Text("Encrypt New File"),
+            label: Text("Enkripsi File Baru"),
             icon: Icon(MdiIcons.lockPlus),
             backgroundColor: Colors.teal,
           )),
@@ -51,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Recent Files",
+                        "File Sebelumnya",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -62,7 +62,7 @@ class HomeView extends GetView<HomeController> {
                           Get.toNamed(Routes.DESCRYPT);
                         },
                         child: Text(
-                          "see all encrypted file",
+                          "lihat semua file yang dienkripsi",
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -95,7 +95,7 @@ class HomeView extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    "Recent Files",
+                    "File Sebelumnya",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -112,7 +112,8 @@ class HomeView extends GetView<HomeController> {
                           size: size.width * 0.5,
                           color: Colors.teal[200],
                         ),
-                        Text("No Data Encrypted Yet!, Please add it first!"),
+                        Text(
+                            "Belum ada data yang dienkripsi!, silahkan melakukan enkripsi file terlebih dahulu!"),
                       ],
                     ),
                   ),

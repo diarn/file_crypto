@@ -12,6 +12,7 @@ dependencies:
   file_cryptor: 0.0.3
   path_provider: 2.0.11
   material_design_icons_flutter: 5.0.6996
+  google_fonts: 3.0.1
   flutter: 
     sdk: flutter
 
