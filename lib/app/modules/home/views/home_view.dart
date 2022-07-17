@@ -65,6 +65,7 @@ class HomeView extends GetView<HomeController> {
                           "lihat semua file yang dienkripsi",
                           style: TextStyle(
                             fontSize: 14,
+                            color: Colors.teal,
                           ),
                         ),
                       ),

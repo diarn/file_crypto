@@ -43,13 +43,13 @@ class HomeController extends GetxController {
       inFileNameEncrypt.text = file.name;
       Get.dialog(
         SimpleDialog(
-          title: Text("Encrypt New File"),
+          title: Text("Enkripsi File Baru"),
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: MyFormField(
                 inputController: inFileNameEncrypt,
-                label: "Original File Name",
+                label: "Nama File Original",
                 textInputType: TextInputType.text,
                 hintText: "hintText",
                 readOnly: true,
@@ -59,9 +59,10 @@ class HomeController extends GetxController {
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: MyFormField(
                 inputController: key,
-                label: "Your Security Key",
+                label: "Kunci Kemanan Anda",
                 textInputType: TextInputType.text,
-                hintText: "Please remember this key for unlock the file later",
+                hintText:
+                    "Harap ingat atau simpan kunci yang Anda masukkan disini untuk digunakan nanti pada saat ingin membuka file kembali",
                 readOnly: false,
               ),
             ),
@@ -69,9 +70,9 @@ class HomeController extends GetxController {
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: MyFormField(
                 inputController: outFileNameEncrypt,
-                label: "Output Name",
+                label: "Nama File Output",
                 textInputType: TextInputType.text,
-                hintText: "Feel free to take anything you want",
+                hintText: "Silahkan masukkan nama file terserah Anda",
                 readOnly: false,
               ),
             ),
@@ -93,7 +94,7 @@ class HomeController extends GetxController {
                       },
                       child: Container(
                         padding: EdgeInsets.all(8),
-                        child: Text("Cancel"),
+                        child: Text("Batalkan"),
                       ),
                     ),
                   ),
@@ -119,7 +120,7 @@ class HomeController extends GetxController {
                       child: Container(
                         padding: EdgeInsets.all(8),
                         child: Text(
-                          "Encrypt",
+                          "Enkripsi",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -203,15 +204,15 @@ class HomeController extends GetxController {
     encryptedFile.exists().then((value) {
       if (value == true) {
         Get.showSnackbar(GetSnackBar(
-          title: "Success",
-          message: "The file has been encrypted",
+          title: "Berhasil",
+          message: "File berhasil dienkripsi",
           duration: 1500.milliseconds,
           backgroundColor: Colors.teal[400]!,
         ));
       } else {
         Get.showSnackbar(GetSnackBar(
-          title: "Failed",
-          message: "The file didn't encrypted",
+          title: "Gagal",
+          message: "File gagal dienkripsi",
           duration: 1500.milliseconds,
           backgroundColor: Colors.red,
         ));
@@ -223,13 +224,13 @@ class HomeController extends GetxController {
   openDescryptDialog(Size size, String filePath, String fileName) async {
     inFileNameDescrypt.text = fileName;
     Get.dialog(SimpleDialog(
-      title: Text("Descrypt File"),
+      title: Text("Deskripsi File"),
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: inFileNameDescrypt,
-            label: "Original File Name",
+            label: "Nama Original File",
             textInputType: TextInputType.text,
             hintText: "hintText",
             readOnly: true,
@@ -239,9 +240,9 @@ class HomeController extends GetxController {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: key,
-            label: "Your Security Key",
+            label: "Kunci Keamanan Anda",
             textInputType: TextInputType.text,
-            hintText: "Input the key for this file",
+            hintText: "Masukkan kunci untuk file ini",
             readOnly: false,
           ),
         ),
@@ -249,7 +250,7 @@ class HomeController extends GetxController {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: outFileNameDescrypt,
-            label: "Output Name",
+            label: "Nama File Output",
             textInputType: TextInputType.text,
             hintText: "Feel free to take anything you want",
             readOnly: false,
@@ -273,7 +274,7 @@ class HomeController extends GetxController {
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
-                    child: Text("Cancel"),
+                    child: Text("Batalkan"),
                   ),
                 ),
               ),
@@ -297,7 +298,7 @@ class HomeController extends GetxController {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                      "Descrypt",
+                      "Deskripsi",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -334,8 +335,8 @@ class HomeController extends GetxController {
       inspect(decryptedFile.absolute);
 
       Get.showSnackbar(GetSnackBar(
-        title: "Success",
-        message: "The file has been encrypted",
+        title: "Berhasil",
+        message: "File berhasil dienkripsi",
         duration: 1500.milliseconds,
         backgroundColor: Colors.teal[400]!,
       ));
@@ -344,7 +345,7 @@ class HomeController extends GetxController {
       Get.showSnackbar(GetSnackBar(
         title: "Failed",
         message:
-            "Invalid or corrupted pad block, please make sure to enter the right key for the file",
+            "Opps terjadi kunci tidak cocok atau pad lock rusak, harap pastikan kunci yang Anda masukkan sudah benar untuk file ini",
         duration: 1500.milliseconds,
         backgroundColor: Colors.red,
       ));
