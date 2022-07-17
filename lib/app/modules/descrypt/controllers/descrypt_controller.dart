@@ -73,7 +73,7 @@ class DescryptController extends GetxController {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: outFileNameDescrypt,
-            label: "Output Name",
+            label: "Nama File Output",
             textInputType: TextInputType.text,
             hintText: "Silahkan masukkan file output terserah Anda",
             readOnly: false,
