@@ -9,7 +9,7 @@ void main() {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Application",
+      title: "File Cryptor",
       theme: ThemeData(
         primarySwatch: Colors.teal,
         textTheme: GoogleFonts.ibmPlexSansTextTheme(),
