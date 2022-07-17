@@ -252,7 +252,7 @@ class HomeController extends GetxController {
             inputController: outFileNameDescrypt,
             label: "Nama File Output",
             textInputType: TextInputType.text,
-            hintText: "Feel free to take anything you want",
+            hintText: "Silahkan masukkan file output terserah Anda",
             readOnly: false,
           ),
         ),

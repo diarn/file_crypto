@@ -47,13 +47,13 @@ class DescryptController extends GetxController {
   openDescryptDialog(Size size, String filePath, String fileName) async {
     inFileNameDescrypt.text = fileName;
     Get.dialog(SimpleDialog(
-      title: Text("Descrypt File"),
+      title: Text("Deskripsi File"),
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: inFileNameDescrypt,
-            label: "Original File Name",
+            label: "Nama File Original",
             textInputType: TextInputType.text,
             hintText: "hintText",
             readOnly: true,
@@ -63,9 +63,9 @@ class DescryptController extends GetxController {
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: MyFormField(
             inputController: key,
-            label: "Your Security Key",
+            label: "Kunci Keamanan Anda",
             textInputType: TextInputType.text,
-            hintText: "Input the key for this file",
+            hintText: "Masukkan kunci file yang dipilih",
             readOnly: false,
           ),
         ),
@@ -75,7 +75,7 @@ class DescryptController extends GetxController {
             inputController: outFileNameDescrypt,
             label: "Output Name",
             textInputType: TextInputType.text,
-            hintText: "Feel free to take anything you want",
+            hintText: "Silahkan masukkan file output terserah Anda",
             readOnly: false,
           ),
         ),
@@ -97,7 +97,7 @@ class DescryptController extends GetxController {
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
-                    child: Text("Cancel"),
+                    child: Text("Batalkan"),
                   ),
                 ),
               ),
@@ -121,7 +121,7 @@ class DescryptController extends GetxController {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                      "Descrypt",
+                      "Deskripsi",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -158,17 +158,17 @@ class DescryptController extends GetxController {
       inspect(decryptedFile.absolute);
 
       Get.showSnackbar(GetSnackBar(
-        title: "Success",
-        message: "The file has been encrypted",
+        title: "Berhasil",
+        message: "File berhasil dideskripsi",
         duration: 1500.milliseconds,
         backgroundColor: Colors.teal[400]!,
       ));
     } catch (e) {
       inspect(e);
       Get.showSnackbar(GetSnackBar(
-        title: "Failed",
+        title: "Gagal",
         message:
-            "Invalid or corrupted pad block, please make sure to enter the right key for the file",
+            "Opps terjadi kunci tidak cocok atau pad lock rusak, harap pastikan kunci yang Anda masukkan sudah benar untuk file ini",
         duration: 1500.milliseconds,
         backgroundColor: Colors.red,
       ));
