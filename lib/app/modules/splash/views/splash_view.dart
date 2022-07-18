@@ -30,13 +30,42 @@ class SplashView extends GetView<SplashController> {
               ),
             ),
             Center(
-              child: Text(
-                'Selamat Datang di Aplikasi \n Rita Bonita',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                  Text(
+                    'Selamat Datang di Aplikasi \n Rita Bonita',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '24052218086',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                  Text(
+                    'Teknik Electro',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(),
+                ],
               ),
             ),
           ],
