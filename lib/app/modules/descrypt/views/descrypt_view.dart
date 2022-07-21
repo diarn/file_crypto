@@ -20,6 +20,7 @@ class DescryptView extends GetView<DescryptController> {
             mainAxisSpacing: 5.0,
             crossAxisSpacing: 5.0,
             crossAxisCount: 2,
+            childAspectRatio: 1.5,
             children: [
               for (var i = 0; i < controller.fileName.length; i++)
                 Material(
@@ -33,6 +34,7 @@ class DescryptView extends GetView<DescryptController> {
                     child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
+                          boxShadow: [BoxShadow()],
                           color: Colors.white,
                         ),
                         child: Column(
@@ -47,16 +49,16 @@ class DescryptView extends GetView<DescryptController> {
                                   color: Colors.teal),
                               child: SizedBox(
                                 width: size.width * 0.5,
-                                height: size.width * 0.33,
+                                height: size.width * 0.2,
                                 child: Image.network(
                                     "https://static.thenounproject.com/png/1631724-200.png"),
                               ),
                             ),
-                            SizedBox(
-                              height: 16,
-                            ),
+                            // SizedBox(
+                            //   height: 16,
+                            // ),
                             Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(8),
                               child: Text("${controller.fileName[i]}"),
                             ),
                           ],

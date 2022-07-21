@@ -47,29 +47,36 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "File Sebelumnya",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.DESCRYPT);
-                        },
-                        child: Text(
-                          "lihat semua file yang dienkripsi",
+                  child: Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "File Sebelumnya",
                           style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.teal,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                      ),
-                    ],
+                        Flexible(
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.DESCRYPT);
+                            },
+                            child: Text(
+                              "lihat file",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.teal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -113,9 +120,15 @@ class HomeView extends GetView<HomeController> {
                           size: size.width * 0.5,
                           color: Colors.teal[200],
                         ),
-                        Text(
-                          "Belum ada data yang dienkripsi!, silahkan melakukan enkripsi file terlebih dahulu!",
-                          textAlign: TextAlign.center,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                          ),
+                          child: Text(
+                            "Belum ada data yang dienkripsi!, silahkan melakukan enkripsi file terlebih dahulu!",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
