@@ -114,7 +114,9 @@ class HomeView extends GetView<HomeController> {
                           color: Colors.teal[200],
                         ),
                         Text(
-                            "Belum ada data yang dienkripsi!, silahkan melakukan enkripsi file terlebih dahulu!"),
+                          "Belum ada data yang dienkripsi!, silahkan melakukan enkripsi file terlebih dahulu!",
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
