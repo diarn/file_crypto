@@ -8,6 +8,8 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const DESCRYPT = _Paths.DESCRYPT;
   static const BERANDA = _Paths.BERANDA;
+  static const HOW_TO_USE = _Paths.HOW_TO_USE;
+  static const ABOUT_APP = _Paths.ABOUT_APP;
 }
 
 abstract class _Paths {
@@ -15,4 +17,6 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const DESCRYPT = '/descrypt';
   static const BERANDA = '/beranda';
+  static const HOW_TO_USE = '/how-to-use';
+  static const ABOUT_APP = '/about-app';
 }
