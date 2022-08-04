@@ -1,3 +1,4 @@
+import 'package:file_encryptor/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,8 +13,8 @@ class BerandaView extends GetView<BerandaController> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    double top = MediaQuery.of(context).padding.top;
     Size size = MediaQuery.of(context).size;
-    AppBar appBar = AppBar();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -36,7 +37,10 @@ class BerandaView extends GetView<BerandaController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: appBar.preferredSize.height,
+                height: 16,
+              ),
+              SizedBox(
+                height: top,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -93,28 +97,36 @@ class BerandaView extends GetView<BerandaController> {
       children: [
         button(
           "Enkripsi File",
-          () {},
+          () {
+            Get.toNamed(Routes.HOME);
+          },
         ),
         SizedBox(
           height: 16,
         ),
         button(
           "Deskripsi File",
-          () {},
+          () {
+            Get.toNamed(Routes.DESCRYPT);
+          },
         ),
         SizedBox(
           height: 16,
         ),
         button(
           "Cara Penggunaan",
-          () {},
+          () {
+            Get.toNamed(Routes.HOW_TO_USE);
+          },
         ),
         SizedBox(
           height: 16,
         ),
         button(
           "Tentang Aplikasi",
-          () {},
+          () {
+            Get.toNamed(Routes.ABOUT_APP);
+          },
         ),
       ],
     );
