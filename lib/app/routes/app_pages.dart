@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:file_encryptor/app/modules/beranda/bindings/beranda_binding.dart';
+import 'package:file_encryptor/app/modules/beranda/views/beranda_view.dart';
 import 'package:file_encryptor/app/modules/descrypt/bindings/descrypt_binding.dart';
 import 'package:file_encryptor/app/modules/descrypt/views/descrypt_view.dart';
 import 'package:file_encryptor/app/modules/home/bindings/home_binding.dart';
@@ -30,6 +32,12 @@ class AppPages {
       name: _Paths.DESCRYPT,
       page: () => DescryptView(),
       binding: DescryptBinding(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: _Paths.BERANDA,
+      page: () => BerandaView(),
+      binding: BerandaBinding(),
       transition: Transition.fade,
     ),
   ];
