@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:file_encryptor/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,9 +9,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  final AppBar appBar = AppBar();
   @override
   Widget build(BuildContext context) {
+    double top = MediaQuery.of(context).padding.top;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -24,60 +23,68 @@ class HomeView extends GetView<HomeController> {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-          body: _content(context, size),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {
-              controller.pickFile(size);
-            },
-            label: Text("Enkripsi File Baru"),
-            icon: Icon(MdiIcons.lockPlus),
-            backgroundColor: Colors.teal,
-          )),
+        body: _content(context, size, top),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            controller.pickFile(size);
+          },
+          label: Text("Enkripsi File Baru"),
+          icon: Icon(MdiIcons.lockPlus),
+          backgroundColor: Colors.teal,
+        ),
+      ),
     );
   }
 
-  Widget _content(BuildContext context, Size size) {
+  Widget _content(BuildContext context, Size size, double top) {
     return Obx(() {
       return controller.file.length > 0
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: appBar.preferredSize.height,
+                  height: top,
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Container(
-                    width: double.infinity,
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "File Sebelumnya",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                        Icon(
+                          Icons.chevron_left_rounded,
                         ),
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.DESCRYPT);
-                            },
-                            child: Text(
-                              "lihat file",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.teal,
-                              ),
-                            ),
-                          ),
+                        SizedBox(
+                          width: 5,
                         ),
+                        Text("Kembali"),
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Container(
+                    width: double.infinity,
+                    child: Text(
+                      "File Sebelumnya",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 Expanded(
                   child: MediaQuery.removePadding(
@@ -98,7 +105,32 @@ class HomeView extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: appBar.preferredSize.height,
+                  height: top,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.chevron_left_rounded,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Kembali"),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -148,8 +180,55 @@ class HomeView extends GetView<HomeController> {
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
           onTap: () {
-            controller.openDescryptDialog(size, filePath, fileName);
-            inspect(filePath);
+            // controller.openDescryptDialog(size, filePath, fileName);
+            Get.dialog(
+              SimpleDialog(
+                title: Text("Pilih Aksi"),
+                contentPadding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Material(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.teal[300],
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text("Download"),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Material(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.teal,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            Get.back();
+                            controller.openDescryptDialog(
+                                size, filePath, fileName);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              "Deskripsi",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+            // inspect(filePath);
           },
           child: Container(
             padding: EdgeInsets.all(8),
