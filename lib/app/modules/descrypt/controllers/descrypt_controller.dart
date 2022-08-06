@@ -16,6 +16,7 @@ class DescryptController extends GetxController {
   RxBool isLoading = false.obs;
   @override
   void onInit() {
+    getFiles();
     super.onInit();
   }
 
@@ -36,6 +37,128 @@ class DescryptController extends GetxController {
       fileName.add(x[6]);
       fileName.refresh();
     }
+  }
+
+  openDownloadDialog(String fileName, String filePath) {
+    Get.dialog(
+      SimpleDialog(
+        title: Text("Pilih Aksi"),
+        contentPadding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Material(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.teal[300],
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {
+                    downloadFile(filePath, fileName);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text("Download"),
+                  ),
+                ),
+              ),
+              // SizedBox(
+              //   width: 8,
+              // ),
+              // Material(
+              //   borderRadius: BorderRadius.circular(8),
+              //   color: Colors.teal,
+              //   child: InkWell(
+              //     borderRadius: BorderRadius.circular(8),
+              //     onTap: () {
+              //       Get.back();
+              //       controller.openDescryptDialog(
+              //           size, filePath, fileName);
+              //     },
+              //     child: Container(
+              //       padding: EdgeInsets.all(8),
+              //       child: Text(
+              //         "Deskripsi",
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  downloadFile(String filePath, String fileName) async {
+    RxString tittle = "Mengunduh".obs;
+    RxString message = "File Anda sedang diunduh".obs;
+    Rx<dynamic> icon = Material(
+      borderRadius: BorderRadius.circular(8),
+      color: Colors.transparent,
+      child: CircularProgressIndicator(),
+    ).obs;
+    Get.showSnackbar(GetSnackBar(
+      backgroundColor: Colors.teal[800]!,
+      titleText: Obx(() {
+        return Text(tittle.value);
+      }),
+      messageText: Obx(() {
+        return Text(message.value);
+      }),
+      mainButton: Obx(() {
+        return icon.value;
+      }),
+    ));
+    io.File downloadPath = io.File("/storage/emulated/0/Download/$fileName");
+    io.File file = io.File(filePath);
+
+    await file.readAsBytes().then((value) async {
+      await downloadPath.writeAsBytes(value).then((vFile) {
+        if (vFile.existsSync() == true) {
+          tittle.value = "Berhasil";
+          tittle.refresh();
+          message.value = "File Anda telah diunduh";
+          message.refresh();
+          icon.value = Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.teal,
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Text("Selesai"),
+              ),
+            ),
+          );
+          icon.refresh();
+        } else {
+          tittle.value = "Gagal";
+          tittle.refresh();
+          message.value = "File Anda gagal diunduh";
+          message.refresh();
+          icon.value = Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.teal,
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Text("Selesai"),
+              ),
+            ),
+          );
+        }
+        icon.refresh();
+      });
+    });
   }
 
   openDescryptDialog(Size size, String filePath, String fileName) async {

@@ -193,7 +193,7 @@ class HomeView extends GetView<HomeController> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(8),
                           onTap: () {
-                            controller.downloadFile(filePath);
+                            controller.downloadFile(filePath, fileName);
                           },
                           child: Container(
                             padding: EdgeInsets.all(8),

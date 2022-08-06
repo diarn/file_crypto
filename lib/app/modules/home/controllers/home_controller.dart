@@ -205,7 +205,7 @@ class HomeController extends GetxController {
     });
   }
 
-  downloadFile(String filePath) async {
+  downloadFile(String filePath, String fileName) async {
     RxString tittle = "Mengunduh".obs;
     RxString message = "File Anda sedang diunduh".obs;
     Rx<dynamic> icon = Material(
@@ -225,7 +225,7 @@ class HomeController extends GetxController {
         return icon.value;
       }),
     ));
-    io.File downloadPath = io.File("/storage/emulated/0/Download/hehe.aes");
+    io.File downloadPath = io.File("/storage/emulated/0/Download/$fileName");
     io.File file = io.File(filePath);
 
     await file.readAsBytes().then((value) async {
