@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'dart:io' as io;
-import 'dart:io';
 
 import 'package:file_cryptor/file_cryptor.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -130,16 +127,6 @@ class HomeController extends GetxController {
               ),
             ),
           ],
-          // child: Container(
-          //   padding: EdgeInsets.all(16),
-          //   // height: size.height * 0.35,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-
-          //     ],
-          //   ),
-          // ),
         ),
       );
     } else {
@@ -148,9 +135,8 @@ class HomeController extends GetxController {
   }
 
   void getFiles() async {
-    final directory = (await getExternalStorageDirectory())!.path;
-
-    final Directory _appDocDirFolder = Directory('$directory/data/');
+    String dirPath = "/storage/emulated/0/File Encryptor/Encrypted File/";
+    final io.Directory _appDocDirFolder = io.Directory(dirPath);
 
     if (await _appDocDirFolder.exists()) {
       //if folder already exists return path
@@ -159,23 +145,21 @@ class HomeController extends GetxController {
       await _appDocDirFolder.create(recursive: true);
     }
 
-    file.value = io.Directory("$directory/data/")
+    file.value = io.Directory(dirPath)
         .listSync(); //use your folder name insted of resume.
-
-    inspect(file);
 
     if (file.length > 0) {
       if (file.length < 10) {
         for (var i = 0; i < file.length; i++) {
           var x = file[i].path.split("/");
-          fileName.add(x[9]);
+
+          fileName.add(x[6]);
           fileName.refresh();
-          // inspect(fileName);
         }
       } else {
         for (var i = 0; i < 10; i++) {
           var x = file[i].path.split("/");
-          fileName.add(x[9]);
+          fileName.add(x[6]);
           fileName.refresh();
         }
       }
@@ -183,9 +167,10 @@ class HomeController extends GetxController {
   }
 
   encryptFile(String fileName) async {
-    final directory = (await getExternalStorageDirectory())!.path;
-    inspect(directory);
-    final Directory _appDocDirFolder = Directory('$directory/data/');
+    // final directory = (await getExternalStorageDirectory())!.path;
+
+    String dirPath = "/storage/emulated/0/File Encryptor/Encrypted File/";
+    final io.Directory _appDocDirFolder = io.Directory(dirPath);
 
     if (await _appDocDirFolder.exists()) {
       //if folder already exists return path
@@ -196,7 +181,7 @@ class HomeController extends GetxController {
     FileCryptor fileCryptor = FileCryptor(
       key: key.text,
       iv: 16,
-      dir: "$directory/data",
+      dir: dirPath,
     );
     io.File encryptedFile = await fileCryptor.encrypt(
         inputFile: "$fileName", outputFile: "${outFileNameEncrypt.text}.aes");
@@ -218,7 +203,76 @@ class HomeController extends GetxController {
         ));
       }
     });
-    inspect(encryptedFile.absolute);
+  }
+
+  downloadFile(String filePath) async {
+    RxString tittle = "Mengunduh".obs;
+    RxString message = "File Anda sedang diunduh".obs;
+    Rx<dynamic> icon = Material(
+      borderRadius: BorderRadius.circular(8),
+      color: Colors.transparent,
+      child: CircularProgressIndicator(),
+    ).obs;
+    Get.showSnackbar(GetSnackBar(
+      backgroundColor: Colors.teal[800]!,
+      titleText: Obx(() {
+        return Text(tittle.value);
+      }),
+      messageText: Obx(() {
+        return Text(message.value);
+      }),
+      mainButton: Obx(() {
+        return icon.value;
+      }),
+    ));
+    io.File downloadPath = io.File("/storage/emulated/0/Download/hehe.aes");
+    io.File file = io.File(filePath);
+
+    await file.readAsBytes().then((value) async {
+      await downloadPath.writeAsBytes(value).then((vFile) {
+        if (vFile.existsSync() == true) {
+          tittle.value = "Berhasil";
+          tittle.refresh();
+          message.value = "File Anda telah diunduh";
+          message.refresh();
+          icon.value = Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.teal,
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Text("Selesai"),
+              ),
+            ),
+          );
+          icon.refresh();
+        } else {
+          tittle.value = "Gagal";
+          tittle.refresh();
+          message.value = "File Anda gagal diunduh";
+          message.refresh();
+          icon.value = Material(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.teal,
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Text("Selesai"),
+              ),
+            ),
+          );
+        }
+        icon.refresh();
+      });
+    });
   }
 
   openDescryptDialog(Size size, String filePath, String fileName) async {
@@ -312,9 +366,10 @@ class HomeController extends GetxController {
   }
 
   descryptFile(String filePath) async {
-    final directory = (await getExternalStorageDirectory())!.path;
-    inspect(directory);
-    final Directory _appDocDirFolder = Directory('$directory/output/');
+    // final directory = (await getExternalStorageDirectory())!.path;
+
+    String dirPath = "/storage/emulated/0/File Encryptor/Descrypted File/";
+    final io.Directory _appDocDirFolder = io.Directory(dirPath);
 
     if (await _appDocDirFolder.exists()) {
       //if folder already exists return path
@@ -326,13 +381,11 @@ class HomeController extends GetxController {
     FileCryptor fileCryptor = FileCryptor(
       key: key.text,
       iv: 16,
-      dir: "$directory/output",
+      dir: dirPath,
     );
     try {
-      File decryptedFile = await fileCryptor.decrypt(
+      await fileCryptor.decrypt(
           inputFile: filePath, outputFile: outFileNameDescrypt.text);
-
-      inspect(decryptedFile.absolute);
 
       Get.showSnackbar(GetSnackBar(
         title: "Berhasil",
@@ -341,7 +394,6 @@ class HomeController extends GetxController {
         backgroundColor: Colors.teal[400]!,
       ));
     } catch (e) {
-      inspect(e);
       Get.showSnackbar(GetSnackBar(
         title: "Failed",
         message:

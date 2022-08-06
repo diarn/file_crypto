@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io' as io;
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,17 +28,13 @@ class DescryptController extends GetxController {
   void onClose() {}
 
   void getFiles() async {
-    final directory = (await getExternalStorageDirectory())!.path;
-    // setState(() {
-    file.value = io.Directory("$directory/data/")
+    String dirPath = "/storage/emulated/0/File Encryptor/Descrypted File/";
+    file.value = io.Directory(dirPath)
         .listSync(); //use your folder name insted of resume.
-    // });
-    // inspect(file);
     for (var i = 0; i < file.length; i++) {
       var x = file[i].path.split("/");
-      fileName.add(x[9]);
+      fileName.add(x[6]);
       fileName.refresh();
-      // inspect(fileName);
     }
   }
 
@@ -136,8 +130,7 @@ class DescryptController extends GetxController {
 
   descryptFile(String filePath) async {
     final directory = (await getExternalStorageDirectory())!.path;
-    inspect(directory);
-    final Directory _appDocDirFolder = Directory('$directory/output/');
+    final io.Directory _appDocDirFolder = io.Directory('$directory/output/');
 
     if (await _appDocDirFolder.exists()) {
       //if folder already exists return path
@@ -152,10 +145,8 @@ class DescryptController extends GetxController {
       dir: "$directory/output",
     );
     try {
-      File decryptedFile = await fileCryptor.decrypt(
+      await fileCryptor.decrypt(
           inputFile: filePath, outputFile: outFileNameDescrypt.text);
-
-      inspect(decryptedFile.absolute);
 
       Get.showSnackbar(GetSnackBar(
         title: "Berhasil",
@@ -164,7 +155,6 @@ class DescryptController extends GetxController {
         backgroundColor: Colors.teal[400]!,
       ));
     } catch (e) {
-      inspect(e);
       Get.showSnackbar(GetSnackBar(
         title: "Gagal",
         message:

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -194,7 +192,9 @@ class HomeView extends GetView<HomeController> {
                         color: Colors.teal[300],
                         child: InkWell(
                           borderRadius: BorderRadius.circular(8),
-                          onTap: () {},
+                          onTap: () {
+                            controller.downloadFile(filePath);
+                          },
                           child: Container(
                             padding: EdgeInsets.all(8),
                             child: Text("Download"),
