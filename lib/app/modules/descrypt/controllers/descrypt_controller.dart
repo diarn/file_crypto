@@ -1,8 +1,8 @@
 import 'dart:io' as io;
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:file_cryptor/file_cryptor.dart';
 
 import '../../home/views/my_widget.dart';
@@ -62,28 +62,6 @@ class DescryptController extends GetxController {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   width: 8,
-              // ),
-              // Material(
-              //   borderRadius: BorderRadius.circular(8),
-              //   color: Colors.teal,
-              //   child: InkWell(
-              //     borderRadius: BorderRadius.circular(8),
-              //     onTap: () {
-              //       Get.back();
-              //       controller.openDescryptDialog(
-              //           size, filePath, fileName);
-              //     },
-              //     child: Container(
-              //       padding: EdgeInsets.all(8),
-              //       child: Text(
-              //         "Deskripsi",
-              //         style: TextStyle(color: Colors.white),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ],
@@ -252,8 +230,10 @@ class DescryptController extends GetxController {
   }
 
   descryptFile(String filePath) async {
-    final directory = (await getExternalStorageDirectory())!.path;
-    final io.Directory _appDocDirFolder = io.Directory('$directory/output/');
+    // final directory = (await getExternalStorageDirectory())!.path;
+
+    String dirPath = "/storage/emulated/0/File Encryptor/Descrypted File/";
+    final io.Directory _appDocDirFolder = io.Directory(dirPath);
 
     if (await _appDocDirFolder.exists()) {
       //if folder already exists return path
@@ -265,11 +245,15 @@ class DescryptController extends GetxController {
     FileCryptor fileCryptor = FileCryptor(
       key: key.text,
       iv: 16,
-      dir: "$directory/output",
+      dir: dirPath,
     );
     try {
-      await fileCryptor.decrypt(
-          inputFile: filePath, outputFile: outFileNameDescrypt.text);
+      await fileCryptor
+          .decrypt(inputFile: filePath, outputFile: outFileNameDescrypt.text)
+          .then((_) {
+        fileName.clear();
+        getFiles();
+      });
 
       Get.showSnackbar(GetSnackBar(
         title: "Berhasil",
@@ -281,10 +265,125 @@ class DescryptController extends GetxController {
       Get.showSnackbar(GetSnackBar(
         title: "Gagal",
         message:
-            "Opps terjadi kunci tidak cocok atau pad lock rusak, harap pastikan kunci yang Anda masukkan sudah benar untuk file ini",
+            "Opps kunci tidak cocok atau pad lock rusak, harap pastikan kunci yang Anda masukkan sudah benar untuk file ini",
         duration: 1500.milliseconds,
         backgroundColor: Colors.red,
       ));
+    }
+  }
+
+  pickFile(Size size) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+    );
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      if (file.extension! != "aes") {
+        Get.showSnackbar(
+          GetSnackBar(
+            backgroundColor: Colors.red,
+            title: "Oops!",
+            message: 'File yang didukung hanya format ".aes"',
+            duration: 2500.milliseconds,
+          ),
+        );
+      } else {
+        openDescryptDialog(size, file.path!, file.name);
+      }
+      // inFileNameEncrypt.text = file.name;
+      // Get.dialog(
+      //   SimpleDialog(
+      //     title: Text("Enkripsi File Baru"),
+      //     children: [
+      //       Padding(
+      //         padding: const EdgeInsets.only(left: 16, right: 16),
+      //         child: MyFormField(
+      //           inputController: inFileNameEncrypt,
+      //           label: "Nama File Original",
+      //           textInputType: TextInputType.text,
+      //           hintText: "hintText",
+      //           readOnly: true,
+      //         ),
+      //       ),
+      //       Padding(
+      //         padding: const EdgeInsets.only(left: 16, right: 16),
+      //         child: MyFormField(
+      //           inputController: key,
+      //           label: "Kunci Kemanan Anda",
+      //           textInputType: TextInputType.text,
+      //           hintText:
+      //               "Harap ingat atau simpan kunci yang Anda masukkan disini untuk digunakan nanti pada saat ingin membuka file kembali",
+      //           readOnly: false,
+      //         ),
+      //       ),
+      //       Padding(
+      //         padding: const EdgeInsets.only(left: 16, right: 16),
+      //         child: MyFormField(
+      //           inputController: outFileNameEncrypt,
+      //           label: "Nama File Output",
+      //           textInputType: TextInputType.text,
+      //           hintText: "Silahkan masukkan nama file terserah Anda",
+      //           readOnly: false,
+      //         ),
+      //       ),
+      //       SizedBox(
+      //         height: 8,
+      //       ),
+      //       Padding(
+      //         padding: const EdgeInsets.only(left: 16, right: 16),
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.end,
+      //           children: [
+      //             Material(
+      //               color: Colors.teal[300],
+      //               borderRadius: BorderRadius.circular(8),
+      //               child: InkWell(
+      //                 borderRadius: BorderRadius.circular(8),
+      //                 onTap: () {
+      //                   Get.back();
+      //                 },
+      //                 child: Container(
+      //                   padding: EdgeInsets.all(8),
+      //                   child: Text("Batalkan"),
+      //                 ),
+      //               ),
+      //             ),
+      //             SizedBox(
+      //               width: 8,
+      //             ),
+      //             Material(
+      //               color: Colors.teal,
+      //               borderRadius: BorderRadius.circular(8),
+      //               child: InkWell(
+      //                 borderRadius: BorderRadius.circular(8),
+      //                 onTap: () {
+      //                   Get.back();
+      //                   isLoaading.value = true;
+      //                   isLoaading.refresh();
+      //                   encryptFile(file.path!).then((_) {
+      //                     fileName.clear();
+      //                     isLoaading.value = false;
+      //                     isLoaading.refresh();
+      //                     getFiles();
+      //                   });
+      //                 },
+      //                 child: Container(
+      //                   padding: EdgeInsets.all(8),
+      //                   child: Text(
+      //                     "Enkripsi",
+      //                     style: TextStyle(color: Colors.white),
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // );
+    } else {
+      // User canceled the picker
     }
   }
 }
