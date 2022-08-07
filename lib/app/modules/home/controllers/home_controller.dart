@@ -33,7 +33,17 @@ class HomeController extends GetxController {
   pickFile(Size size) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc'],
+      allowedExtensions: [
+        'pdf',
+        'doc',
+        'docx',
+        'txt',
+        'odt',
+        'xls',
+        'xlsx',
+        'ppt',
+        'pptx',
+      ],
     );
     if (result != null) {
       PlatformFile file = result.files.first;
