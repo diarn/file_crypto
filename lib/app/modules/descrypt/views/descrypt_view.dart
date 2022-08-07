@@ -11,7 +11,7 @@ class DescryptView extends GetView<DescryptController> {
     // controller.getFiles();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Semua File Dienkripsi'),
+        title: Text('Semua File Dideskripsi'),
         centerTitle: true,
       ),
       body:
